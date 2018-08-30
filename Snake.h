@@ -5,9 +5,22 @@
 #ifndef SNAKE_SNAKE_H
 #define SNAKE_SNAKE_H
 
+#include <vector>
+
 struct Position{
     int row;
     int col;
+};
+
+struct Cost{
+    int F;
+    int G;
+    int H;
+};
+
+struct Parent{
+    Position pos;
+    bool active;
 };
 
 struct Tile{
@@ -15,6 +28,10 @@ struct Tile{
     bool edge;
     bool food;
     Position snakeNeighbor;
+    Cost cost;
+    std::vector<Position> children;
+    Parent parent;
+    bool path;
 };
 
 enum Direction {UP, DOWN, LEFT, RIGHT};
@@ -26,6 +43,7 @@ private:
     Direction dir;
     Position startPos;
     Position endPos;
+    Position food;
     Tile *gameBoard;
     bool alive;
 public:
@@ -45,7 +63,21 @@ public:
     void initialization();
     int randomWithLimits(int min, int max) const;
     void moveSnake();
+    void moveSnakeSimulation (Direction dirSim);
     void makeNewFood();
+    void setFoodPos(int row, int col);
+    void addChild(int row, int col, Position child);
+    void addParent(int row, int col, Parent parent);
+    void setCost(int row, int col, Cost newCost);
+    Cost getCost(int row, int col) const;
+    Position getFoodPos() const;
+    std::vector<Position> getChildren(int row, int col) const;
+    Parent getParent(int row, int col) const;
+    Cost costFunction(Position child);
+    std::vector<Position> findChildrenAndAddChildrenAndParent();
+    Direction pathFinder();
+    void resetBoardAfterPathFinder();
+    bool isTilePath(int row, int col) const;
 };
 
 #endif //SNAKE_SNAKE_H

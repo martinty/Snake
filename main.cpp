@@ -9,10 +9,11 @@ const sf::Color TILE_COLOR = sf::Color::White;
 const sf::Color SNAKE_COLOR = sf::Color::Green;
 const sf::Color FOOD_COLOR = sf::Color::Red;
 const sf::Color EDGE_COLOR = sf::Color::Black;
+const sf::Color PATH_COLOR = sf::Color::Blue;
 const int TILE_SIZE = 32;
 const int HEIGHT = 30;
 const int WIDTH = 30;
-const int SPEED = 100;
+const int SPEED = 1;
 
 int main() {
     srand(time(nullptr));
@@ -22,6 +23,7 @@ int main() {
     clock_t time = clock();
     while (window.isOpen()){
         if(clock() - time > SPEED && game->isSnakeAlive()){
+            game->setDirection(game->pathFinder());
             game->moveSnake();
             time = clock();
         }
@@ -102,6 +104,13 @@ int main() {
                     tile.setFillColor(TILE_COLOR);
                 }
                 window.draw(tile);
+
+                if (game->isTilePath(row, col)){
+                    tile.setSize(sf::Vector2f(TILE_SIZE/2, TILE_SIZE/2));
+                    tile.setPosition(tile_x + TILE_SIZE/4, tile_y + TILE_SIZE/4);
+                    tile.setFillColor(PATH_COLOR);
+                    window.draw(tile);
+                }
             }
         }
         window.display();

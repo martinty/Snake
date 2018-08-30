@@ -11,10 +11,16 @@ iostream
 -
 random
 -
+cmath
+-
+vector
+-
 Snake.h
 C:/Users/tysse/Documents/C++/Snake/Snake.h
 
 C:/Users/tysse/Documents/C++/Snake/Snake.h
+vector
+-
 
 C:/Users/tysse/Documents/C++/Snake/main.cpp
 SFML/Graphics.hpp
